@@ -1,7 +1,6 @@
 package edu.grinnell.csc207.main;
 
 import java.io.PrintWriter;
-
 import edu.grinnell.csc207.util.CipherUtils;
 
 public class AllCaesar {

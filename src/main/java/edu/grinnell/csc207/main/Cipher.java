@@ -73,7 +73,7 @@ public class Cipher {
         else if ((args[i].equals("-vigenere")) || (args[i].equals("-caesar"))) {
           cipher = args[i];
         }
-        else if (str.equals("")){
+        else if (str.equals("")) {
           str = args[i];
         }
         else {

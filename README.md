@@ -1,4 +1,4 @@
-CSC 207 - 02 
+CSC 207 - 02 (Fall)
 Mini-Project 1: Classical encryption
 
 Date: 09/07/2024

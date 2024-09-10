@@ -1,3 +1,10 @@
+/**
+ *  CSC-207-02 (Fall)
+ *  Mini-Project 1: Classical encryption
+ *  Maral Bat-Erdene
+ *  2024-09-10
+ */
+
 package edu.grinnell.csc207.util;
 
 /**
@@ -11,6 +18,9 @@ public class CipherUtils {
 
   /** The ASCII value for the lowercase letter 'a'. */
   static final int LOW_MIN = 'a';
+
+  /** The number of letters in the English alphabet,
+   *  used to handle wrapping around the end of the alphabet. */
   static final int ALPHABET_SIZE = 26;
 
   // +---------+-----------------------------------------------------
@@ -42,13 +52,14 @@ public class CipherUtils {
   } // int2letter
 
   /**
-   * 
-   * @param str
-   * @param letter
-   * @return
+   * Encrypts a string using the Caesar cipher with the given key letter.
+   *
+   * @param str The string to be encrypted. Must consist of only lowercase letters.
+   * @param letter The letter used as the key for encryption.
+   * @return The encrypted string. Returns an empty string for invalid inputs.
    */
   public static String caesarEncrypt(String str, char letter) {
-    //encrypt a string consisting of only lowercase letters, using 
+    //encrypt a string consisting of only lowercase letters, using
     // the given letter as the “key”.
 
     int key = letter2int(letter);
@@ -57,43 +68,45 @@ public class CipherUtils {
 
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) + key) % ALPHABET_SIZE;
-      enStr += int2letter(chInt); 
+      enStr += int2letter(chInt);
     } // for
     return enStr; // return the encrypted string
   } // caesarEncrypt
 
   /**
+   * Decrypts a string encrypted with the Caesar cipher using the given key letter.
    *
-   * @param str
-   * @param letter
-   * @return
+   * @param str The string to be decrypted. Must consist of only lowercase letters.
+   * @param letter The letter used as the key for decryption.
+   * @return The decrypted string. Returns an empty string for invalid inputs.
    */
   public static String caesarDecrypt(String str, char letter) {
-      //decrypt a string consisting of only lowercase letters, using 
-      // the given letter as the “key”.
+    //decrypt a string consisting of only lowercase letters, using
+    // the given letter as the “key”.
 
-      int key = letter2int(letter);
-      int chInt;
-      String deStr = "";
+    int key = letter2int(letter);
+    int chInt;
+    String deStr = "";
 
-      for (int i = 0; i < str.length(); i++) {
-        chInt = (letter2int(str.charAt(i)) - key) % ALPHABET_SIZE;
+    for (int i = 0; i < str.length(); i++) {
+      chInt = (letter2int(str.charAt(i)) - key) % ALPHABET_SIZE;
 
-        // negative integers do not “wrap around”, so I am fixing the wrap manually.
-        if (chInt < 0) {
-          chInt = chInt + ALPHABET_SIZE;
-        } // if
+      // negative integers do not “wrap around”, so I am fixing the wrap manually.
+      if (chInt < 0) {
+        chInt = chInt + ALPHABET_SIZE;
+      } // if
 
-        deStr += int2letter(chInt); 
-      } // for
-      return deStr;
+      deStr += int2letter(chInt);
+    } // for
+    return deStr;
   } // caesarDecrypt
 
   /**
+   * Encrypts a string using the Vigenère cipher with the given key.
    *
-   * @param str
-   * @param key
-   * @return
+   * @param str The string to be encrypted. Must consist of only lowercase letters.
+   * @param key The key used for encryption. Must consist of only lowercase letters.
+   * @return The encrypted string. Returns an empty string for invalid inputs.
    */
   public static String vigenereEncrypt(String str, String key) {
     // to encrypt a string consisting of only lowercase letters,
@@ -110,25 +123,27 @@ public class CipherUtils {
       keyStr += key.charAt(i);
     } // for
 
-    //use the character value of the i-th letter of the keyword as 
+    //use the character value of the i-th letter of the keyword as
     // the shift value of the i-th letter of the str
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) + letter2int(keyStr.charAt(i))) % ALPHABET_SIZE;
-      enStr += int2letter(chInt); 
+      enStr += int2letter(chInt);
     } // for
     return enStr; // return the encrypted string
   } // vigenereEncrypt
 
   /**
+   * Decrypts a string encrypted with the Vigenère cipher using the given key.
    *
-   * @param str
-   * @param key
-   * @return
+   * @param str The string to be decrypted. Must consist of only lowercase letters.
+   * @param key The key used for decryption. Must consist of only lowercase letters.
+   * @return The decrypted string. Returns an empty string for invalid inputs.
    */
   public static String vigenereDecrypt(String str, String key) {
     // to decrypt a string consisting of only lowercase letters,
     // using the given key (which also consists of only lowercase letters).
-    String deStr = "", keyStr = "";
+    String deStr = "";
+    String keyStr = "";
     int chInt;
 
     //replicate the keyword to match the length of the plaintext.
@@ -140,7 +155,7 @@ public class CipherUtils {
       keyStr += key.charAt(i);
     } // for
 
-    //use the character value of the i-th letter of the keyword as 
+    //use the character value of the i-th letter of the keyword as
     // the reverse shift value of the i-th letter of the str
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) - letter2int(keyStr.charAt(i))) % ALPHABET_SIZE;
@@ -150,7 +165,7 @@ public class CipherUtils {
         chInt = chInt + ALPHABET_SIZE;
       } // if
 
-      deStr += int2letter(chInt); 
+      deStr += int2letter(chInt);
     } // for
     return deStr; // return the decrypted string
   } // vigenereDecrypt

@@ -11,6 +11,7 @@ public class CipherUtils {
 
   /** The ASCII value for the lowercase letter 'a'. */
   static final int LOW_MIN = 'a';
+  static final int ALPHABET_SIZE = 26;
 
   // +---------+-----------------------------------------------------
   // | Methods |
@@ -54,15 +55,15 @@ public class CipherUtils {
     int ch_int;
     String en_str = "";
 
-    for (int i = 0; i < str.length(); i++){
-      ch_int = (letter2int(str.charAt(i)) + key) % 26;
+    for (int i = 0; i < str.length(); i++) {
+      ch_int = (letter2int(str.charAt(i)) + key) % ALPHABET_SIZE;
       en_str += int2letter(ch_int); 
-    }
+    } // for
     return en_str; // return the encrypted string
   } // caesarEncrypt
 
   /**
-   * 
+   *
    * @param str
    * @param letter
    * @return
@@ -75,21 +76,21 @@ public class CipherUtils {
       int ch_int;
       String de_str = "";
 
-      for (int i = 0; i < str.length(); i++){
-        ch_int = (letter2int(str.charAt(i)) - key) % 26;
+      for (int i = 0; i < str.length(); i++) {
+        ch_int = (letter2int(str.charAt(i)) - key) % ALPHABET_SIZE;
 
         // negative integers do not “wrap around”, so I am fixing the wrap manually.
-        if (ch_int < 0){
-          ch_int = ch_int + 26;
-        }
+        if (ch_int < 0) {
+          ch_int = ch_int + ALPHABET_SIZE;
+        } // if
 
         de_str += int2letter(ch_int); 
-      }
-      return de_str; // return the decrypted string
+      } // for
+      return de_str;
   } // caesarDecrypt
 
   /**
-   * 
+   *
    * @param str
    * @param key
    * @return
@@ -102,25 +103,24 @@ public class CipherUtils {
     String key_str = "";
 
     //replicate the keyword to match the length of the plaintext.
-    for (int i = 0; i < (str.length() / key.length()); i++){
+    for (int i = 0; i < (str.length() / key.length()); i++) {
       key_str += key;
-    }
-    for (int i = 0; i < (str.length() % key.length()); i++){
+    } // for
+    for (int i = 0; i < (str.length() % key.length()); i++) {
       key_str += key.charAt(i);
-    }
+    } // for
 
     //use the character value of the i-th letter of the keyword as 
     // the shift value of the i-th letter of the str
-    for (int i = 0; i < str.length(); i++){
-      ch_int = (letter2int(str.charAt(i)) + letter2int(key_str.charAt(i))) % 26;
+    for (int i = 0; i < str.length(); i++) {
+      ch_int = (letter2int(str.charAt(i)) + letter2int(key_str.charAt(i))) % ALPHABET_SIZE;
       en_str += int2letter(ch_int); 
-    }
-    
+    } // for
     return en_str; // return the encrypted string
   } // vigenereEncrypt
 
   /**
-   * 
+   *
    * @param str
    * @param key
    * @return
@@ -132,25 +132,26 @@ public class CipherUtils {
     int ch_int;
 
     //replicate the keyword to match the length of the plaintext.
-    for (int i = 0; i < (str.length() / key.length()); i++){
+    for (int i = 0; i < (str.length() / key.length()); i++) {
       key_str += key;
-    }
-    for (int i = 0; i < (str.length() % key.length()); i++){
+    } // for
+
+    for (int i = 0; i < (str.length() % key.length()); i++) {
       key_str += key.charAt(i);
-    }
+    } // for
 
     //use the character value of the i-th letter of the keyword as 
     // the reverse shift value of the i-th letter of the str
-    for (int i = 0; i < str.length(); i++){
-      ch_int = (letter2int(str.charAt(i)) - letter2int(key_str.charAt(i))) % 26;
+    for (int i = 0; i < str.length(); i++) {
+      ch_int = (letter2int(str.charAt(i)) - letter2int(key_str.charAt(i))) % ALPHABET_SIZE;
 
       // negative integers do not “wrap around”, so I am fixing the wrap manually.
-      if (ch_int < 0){
-        ch_int = ch_int + 26;
-      }
+      if (ch_int < 0) {
+        ch_int = ch_int + ALPHABET_SIZE;
+      } // if
 
       de_str += int2letter(ch_int); 
-    }
+    } // for
     return de_str; // return the decrypted string
   } // vigenereDecrypt
 } // class CipherUtils

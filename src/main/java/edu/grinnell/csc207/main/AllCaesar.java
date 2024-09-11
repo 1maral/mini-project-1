@@ -30,6 +30,7 @@ public class AllCaesar {
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
 
+    //checking for two arguments
     if (args.length == 2) {
       String str = args[1];
 

@@ -1,4 +1,3 @@
-
 /**
  *  CSC-207-02 (Fall)
  *  Mini-Project 1: Classical encryption
@@ -9,6 +8,7 @@
 package edu.grinnell.csc207.main;
 
 import java.io.PrintWriter;
+
 import edu.grinnell.csc207.util.CipherUtils;
 
 /**
@@ -37,18 +37,27 @@ public class Cipher {
    */
   private static void
             myCipherCall(PrintWriter pen, String action, String cipher, String str, String key) {
+    // Handle Caesar cipher operations
     if (cipher.equals("-caesar")) {
+      // Encode using Caesar cipher
       if (action.equals("-encode")) {
         pen.printf("ciphertext: %s\n", CipherUtils.caesarEncrypt(str, key.charAt(0)));
+      // Decode using Caesar cipher
       } else if (action.equals("-decode")) {
         pen.printf("plaintext: %s\n", CipherUtils.caesarDecrypt(str, key.charAt(0)));
       } // if
+
+    // Handle Vigenère cipher operations
     } else if (cipher.equals("-vigenere")) {
+      // Encode using Vigenère cipher
       if (action.equals("-encode")) {
         pen.printf("ciphertext: %s\n", CipherUtils.vigenereEncrypt(str, key));
+      // Decode using Vigenère cipher
       } else if (action.equals("-decode")) {
         pen.printf("plaintext: %s\n", CipherUtils.vigenereDecrypt(str, key));
       } // if
+
+    // Print an error message for invalid cipher types or actions
     } else {
       System.err.println("Error: Invalid parameters.");
       return;
@@ -67,7 +76,9 @@ public class Cipher {
    */
   private static boolean
             myFourArguments(PrintWriter pen, String action, String cipher, String str, String key) {
+    // Check that none of the input parameters are empty
     if (!action.equals("") && !cipher.equals("") && !str.equals("") && !key.equals("")) {
+      // Validate that the input string contains only lowercase letters
       for (char c: str.toCharArray()) {
         if (!(c >= 'a' && c <= 'z')) {
           System.err.println("Error: String contains characters other than lowercase letters.\n");
@@ -75,13 +86,17 @@ public class Cipher {
         } // if
       } // for
 
+      // Validate that the Caesar cipher key is a single character
       if (cipher.equals("-caesar") && key.length() != 1) {
         System.err.println("Error: Caesar key should be a single character.\n");
         return false;
       } // if
 
+      // Print the validated parameters for confirmation
       pen.printf("action: %s, cipher: %s, string: %s, key: %s\n", action, cipher, str, key);
       return true;
+
+    // Handle the case where one or more parameters are empty
     } else {
       System.err.println("Error: Invalid parameters, empty field.");
       return false;
@@ -105,7 +120,9 @@ public class Cipher {
     String str = "";
     String key = "";
 
+    // Check if the correct number of arguments is provided
     if (args.length == NUM_ARG) {
+      // Process each argument to assign values to action, cipher, str, and key
       for (int i = 0; i < args.length; i++) {
         if ((args[i].equals("-encode")) || (args[i].equals("-decode"))) {
           action = args[i];
@@ -118,13 +135,17 @@ public class Cipher {
         } // else
       } // for
 
+      // Validate the arguments and proceed if they are correct
       if (myFourArguments(pen, action, cipher, str, key)) {
         myCipherCall(pen, action, cipher, str, key);
       } // if
+
+    // Handle incorrect number of parameters
     } else {
       System.err.println("Error: Incorrect number of parameters.");
       return;
     } // else
+    
     pen.close();
   } // main
 } // class Cipher

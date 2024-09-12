@@ -30,10 +30,11 @@ public class AllCaesar {
   public static void main(String[] args) {
     PrintWriter pen = new PrintWriter(System.out, true);
 
-    //checking for two arguments
+    // Check if exactly two arguments are provided
     if (args.length == 2) {
       String str = args[1];
 
+      // Validate that the string contains only lowercase letters
       for (char c: str.toCharArray()) {
         if (!(c >= 'a' && c <= 'z')) {
           System.err.println("Error: String contains characters other than lowercase letters.\n");
@@ -41,20 +42,26 @@ public class AllCaesar {
         } // if
       } // for
 
+      // Perform the requested action
       if (args[0].equals("encode")) {
+        // Encode the string using all single-character keys from 'a' to 'z'
         for (char ch = 'a'; ch <= 'z'; ch++) {
           pen.printf("n = %c: %s\n", ch, CipherUtils.caesarEncrypt(str, ch));
         } // for
       } else if (args[0].equals("decode")) {
+        // Decode the string using all single-character keys from 'a' to 'z'
         for (char ch = 'a'; ch <= 'z'; ch++) {
           pen.printf("n = %c: %s\n", ch, CipherUtils.caesarDecrypt(str, ch));
         } // for
       } else {
+        // Handle invalid action options
         System.err.println("Error: Invalid option: \"" + args[0]
             + "\". Valid options are \"encode\" or \"decode\".");
         return;
       } // else
+
     } else {
+      // Handle incorrect number of arguments
       System.err.println("Error: Incorrect number of parameters.\n");
       return;
     } // else

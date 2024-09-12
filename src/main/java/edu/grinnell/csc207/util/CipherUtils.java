@@ -66,6 +66,12 @@ public class CipherUtils {
     int chInt;
     String enStr = "";
 
+    // Check if the input string is empty (edge case handling)
+    if (str.equals(enStr)) {
+      return enStr;
+    } // if
+
+    // Iterate over each character in the input string
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) + key) % ALPHABET_SIZE;
       enStr += int2letter(chInt);
@@ -88,10 +94,16 @@ public class CipherUtils {
     int chInt;
     String deStr = "";
 
+    // Check if the input string is empty (edge case handling)
+    if (str.equals(deStr)) {
+      return deStr;
+    } // if
+
+    // Iterate over each character in the input string
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) - key) % ALPHABET_SIZE;
 
-      // negative integers do not “wrap around”, so I am fixing the wrap manually.
+      // Handle negative values resulting from the modulo operation
       if (chInt < 0) {
         chInt = chInt + ALPHABET_SIZE;
       } // if
@@ -115,16 +127,19 @@ public class CipherUtils {
     int chInt;
     String keyStr = "";
 
-    //replicate the keyword to match the length of the plaintext.
+    // Replicate the keyword to match the length of the plaintext
+    // First, repeat the entire keyword to cover most of the plaintext length
     for (int i = 0; i < (str.length() / key.length()); i++) {
       keyStr += key;
     } // for
+
+    // Append the remaining part of the keyword needed to match the plaintext length
     for (int i = 0; i < (str.length() % key.length()); i++) {
       keyStr += key.charAt(i);
     } // for
 
-    //use the character value of the i-th letter of the keyword as
-    // the shift value of the i-th letter of the str
+    // Encrypt each character of the plaintext using the
+    // corresponding character of the keyword
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) + letter2int(keyStr.charAt(i))) % ALPHABET_SIZE;
       enStr += int2letter(chInt);
@@ -146,21 +161,23 @@ public class CipherUtils {
     String keyStr = "";
     int chInt;
 
-    //replicate the keyword to match the length of the plaintext.
+    // Replicate the keyword to match the length of the plaintext
+    // Repeat the entire keyword enough times to cover most of the plaintext length
     for (int i = 0; i < (str.length() / key.length()); i++) {
       keyStr += key;
     } // for
 
+    // Append the remaining part of the keyword needed to match the plaintext length
     for (int i = 0; i < (str.length() % key.length()); i++) {
       keyStr += key.charAt(i);
     } // for
 
-    //use the character value of the i-th letter of the keyword as
-    // the reverse shift value of the i-th letter of the str
+    // Decrypt each character of the ciphertext using
+    // the corresponding character of the keyword
     for (int i = 0; i < str.length(); i++) {
       chInt = (letter2int(str.charAt(i)) - letter2int(keyStr.charAt(i))) % ALPHABET_SIZE;
 
-      // negative integers do not “wrap around”, so I am fixing the wrap manually.
+      // Handle negative values resulting from the modulo operation
       if (chInt < 0) {
         chInt = chInt + ALPHABET_SIZE;
       } // if

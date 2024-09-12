@@ -41,20 +41,20 @@ public class Cipher {
     if (cipher.equals("-caesar")) {
       // Encode using Caesar cipher
       if (action.equals("-encode")) {
-        pen.printf("ciphertext: %s\n", CipherUtils.caesarEncrypt(str, key.charAt(0)));
+        pen.printf("%s\n", CipherUtils.caesarEncrypt(str, key.charAt(0)));
       // Decode using Caesar cipher
       } else if (action.equals("-decode")) {
-        pen.printf("plaintext: %s\n", CipherUtils.caesarDecrypt(str, key.charAt(0)));
+        pen.printf("%s\n", CipherUtils.caesarDecrypt(str, key.charAt(0)));
       } // if
 
     // Handle Vigenère cipher operations
     } else if (cipher.equals("-vigenere")) {
       // Encode using Vigenère cipher
       if (action.equals("-encode")) {
-        pen.printf("ciphertext: %s\n", CipherUtils.vigenereEncrypt(str, key));
+        pen.printf("%s\n", CipherUtils.vigenereEncrypt(str, key));
       // Decode using Vigenère cipher
       } else if (action.equals("-decode")) {
-        pen.printf("plaintext: %s\n", CipherUtils.vigenereDecrypt(str, key));
+        pen.printf("%s\n", CipherUtils.vigenereDecrypt(str, key));
       } // if
 
     // Print an error message for invalid cipher types or actions
@@ -92,8 +92,16 @@ public class Cipher {
         return false;
       } // if
 
+      // Validate that the key string contains only lowercase letters
+      for (char c: key.toCharArray()) {
+        if (!(c >= 'a' && c <= 'z')) {
+          System.err.println("Error: Key contains characters other than lowercase letters.\n");
+          return false;
+        } // if
+      } // for
+
       // Print the validated parameters for confirmation
-      pen.printf("action: %s, cipher: %s, string: %s, key: %s\n", action, cipher, str, key);
+      // pen.printf("action: %s, cipher: %s, string: %s, key: %s\n", action, cipher, str, key);
       return true;
 
     // Handle the case where one or more parameters are empty

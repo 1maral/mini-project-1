@@ -1,5 +1,5 @@
 CSC 207 - 02 (Fall)
-Mini-Project 1: Classical encryption
+#Mini-Project 1: Classical encryption
 
 Name: Maral Bat-Erdene
 Date: 09/07/2024

@@ -145,7 +145,7 @@ public class Cipher {
       System.err.println("Error: Incorrect number of parameters.");
       return;
     } // else
-    
+
     pen.close();
   } // main
 } // class Cipher
